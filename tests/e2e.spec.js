@@ -159,7 +159,7 @@ test.describe('Quiz Arena - Full 10 Question Gameplay', () => {
       });
     });
 
-    await page.route('**/api.php?*amount=10*', route => {
+    await page.route('**/opentdb.com/api.php?*amount=10*', route => {
       route.fulfill({
         status: 200,
         contentType: 'application/json',

@@ -1,6 +1,6 @@
 # Quiz Arena
 
-A browser-based quiz game that fetches multiple-choice questions from the [Open Trivia DB](https://opentdb.com/api_config.php). Choose a category and difficulty, answer 10 questions against a 15-second timer, use boosters strategically, and compete for a high score.
+A browser-based quiz game that fetches multiple-choice questions from the [Open Trivia DB](https://opentdb.com/api_config.php) as the primary source, with a robust local question bank as a fallback for instant, reliable play. Choose a category and difficulty, answer 10 questions against a 15-second timer, use boosters strategically, and compete for a high score.
 
 **Live site:** [https://quiz-arena-lovat.vercel.app](https://quiz-arena-lovat.vercel.app)
 
@@ -37,12 +37,22 @@ A browser-based quiz game that fetches multiple-choice questions from the [Open 
 - HTML5
 - CSS3
 - Vanilla JavaScript using ES modules
-- Open Trivia DB API
+- Open Trivia DB API (primary question source)
+- Local question bank (fallback for reliability)
 - `localStorage` for local high scores
 - Supabase for the optional global leaderboard
 - Playwright for automated testing
 
 The project requires no frontend build step.
+
+## Question Source
+
+Quiz Arena uses **Open Trivia DB** as the primary question source:
+- When you start a quiz, the app requests questions from `https://opentdb.com/api.php` with the selected category, difficulty, and `type=multiple`.
+- HTML entities in questions and answers are automatically decoded.
+- If the API fails (network error, timeout, malformed response, insufficient questions for the selected category/difficulty), the app seamlessly falls back to the local question bank.
+- The local bank contains curated questions across all categories and difficulties for offline play.
+- A small "Using offline questions" indicator appears when the fallback is active.
 
 ## Run Locally
 

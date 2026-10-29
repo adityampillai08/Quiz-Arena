@@ -27,7 +27,7 @@ test.afterAll(() => {
 });
 
 test.describe('Category Selection Verification', () => {
-  test('Test: Selected category is respected', async ({ page }) => {
+  test('Test: Selected category is respected (Science & Nature)', async ({ page }) => {
     await page.goto(BASE_URL);
 
     // Select Science & Nature category
@@ -81,6 +81,54 @@ test.describe('Category Selection Verification', () => {
       const currentQuestionText = await page.locator('#question-text').textContent();
       console.log(`Question ${i}:`, currentQuestionText);
     }
+  });
+
+  test('Test: Art category works at all difficulties', async ({ page }) => {
+    for (const difficulty of ['easy', 'medium', 'hard']) {
+      await page.goto(BASE_URL);
+
+      // Select Art category
+      await page.selectOption('#category-select', '25');
+      await page.selectOption('#difficulty-select', difficulty);
+
+      // Start quiz
+      await page.locator('#start-button').click();
+
+      // Wait for booster grant overlay to appear and close it
+      await page.waitForSelector('#booster-grant-overlay', { state: 'visible', timeout: 10000 });
+      await page.click('#booster-grant-overlay [data-action="close"]');
+
+      // Wait for question to appear
+      await page.waitForSelector('#question-text:not(:empty)', { timeout: 10000 });
+
+      // Verify quiz starts successfully
+      const quizScreenVisible = await page.locator('#screen-quiz').isVisible();
+      expect(quizScreenVisible).toBe(true);
+
+      console.log(`Art category works with ${difficulty} difficulty`);
+    }
+  });
+
+  test('Test: History category works correctly', async ({ page }) => {
+    await page.goto(BASE_URL);
+
+    // Select History category
+    await page.selectOption('#category-select', '23');
+    await page.selectOption('#difficulty-select', 'medium');
+
+    // Start quiz
+    await page.locator('#start-button').click();
+
+    // Wait for booster grant overlay to appear and close it
+    await page.waitForSelector('#booster-grant-overlay', { state: 'visible', timeout: 10000 });
+    await page.click('#booster-grant-overlay [data-action="close"]');
+
+    // Wait for question to appear
+    await page.waitForSelector('#question-text:not(:empty)', { timeout: 10000 });
+
+    // Verify quiz starts successfully
+    const quizScreenVisible = await page.locator('#screen-quiz').isVisible();
+    expect(quizScreenVisible).toBe(true);
   });
 
   test('Test: Any Category option works correctly', async ({ page }) => {

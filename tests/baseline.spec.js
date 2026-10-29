@@ -159,7 +159,7 @@ test.describe('Quiz Arena Baseline', () => {
       });
     });
 
-    await page.route('**/api.php?*amount=10*', route => {
+    await page.route('**/opentdb.com/api.php?*amount=10*', route => {
       route.fulfill({
         status: 200,
         contentType: 'application/json',
