@@ -31,3 +31,4 @@ screenshots/
 # Temporary files
 *.tmp
 *.temp
+.vercel
