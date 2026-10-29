@@ -20,6 +20,7 @@ import {
   MAX_TIME_BONUS,
   STREAK_BONUS_STEP,
   STREAK_BONUS_MAX_STEPS,
+  EXTRA_TIME_MS,
 } from '../constants.js';
 import { CountdownTimer } from './timer.js';
 import { calculatePoints, buildQuizResult, applyBooster } from './scoring.js';

@@ -218,6 +218,8 @@ export async function fetchQuestions({
       const filtered = bank.filter(q => q.category.toLowerCase() === matchedCategory.name.toLowerCase());
       if (filtered.length >= 3) {
         bank = filtered;
+      } else {
+        throw new TriviaApiError('NO_RESULTS', `Not enough questions in the selected category: ${matchedCategory.name}. Please select a different category.`);
       }
     }
   }
