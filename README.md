@@ -2,7 +2,7 @@
 
 A quiz game that pulls fresh multiple-choice questions from the [Open Trivia DB](https://opentdb.com/api_config.php). Pick a category and a difficulty, answer 10 questions against a 15-second clock, and see how you rank.
 
-**Live site:** _add your link here_
+**Live site:** [https://quiz-arena-lovat.vercel.app](https://quiz-arena-lovat.vercel.app)
 
 ## What it does
 
@@ -61,3 +61,20 @@ The engine knows nothing about the page. It emits events (question shown, timer 
 ## Deploy
 
 GitHub Pages: repo Settings → Pages → deploy from branch `main`, folder `/ (root)`.
+
+## Boosters
+
+The game includes 10 unique boosters:
+
+- **Double Up**: Doubles points on correct answers
+- **Double Jeopardy**: Doubles points on correct answers, deducts base points on wrong answers
+- **Eraser**: Removes one wrong option
+- **50/50**: Removes two wrong options
+- **Time Freeze**: Pauses the timer
+- **Extra Time**: Adds 10 seconds to the clock
+- **Second Chance**: Allows one retry on wrong answers
+- **Streak Saver**: Preserves streak on wrong answers
+- **Quick Draw**: Triples time bonus on correct answers
+- **Pass**: Skips the question
+
+All boosters are activated through the UI and have their effects applied correctly.
