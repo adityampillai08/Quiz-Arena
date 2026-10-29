@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz Arena: 10 questions, 15 seconds each</title>
+  <meta name="description" content="Pick a topic and a difficulty, then answer 10 multiple-choice questions against the clock. Track your best score and see how you rank.">
+  <meta name="theme-color" content="#1E1236">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/screens.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body data-screen="start">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="app-header">
+    <a id="brand" class="brand" href="./">Quiz Arena</a>
+  </header>
+
+  <main id="main">
+    <section class="screen" id="screen-start" data-screen="start" aria-labelledby="heading-start">
+      <div class="hero">
+        <h1 id="heading-start" tabindex="-1">Ten questions. Fifteen seconds each.</h1>
+        <p class="lead">Pick a topic and a difficulty. Right answers score more the faster you give them, and a streak adds bonus points.</p>
+      </div>
+
+      <form id="start-form" class="panel" novalidate>
+        <div class="field">
+          <label for="player-name">Your name</label>
+          <input id="player-name" name="player-name" type="text" maxlength="20" autocomplete="nickname" aria-describedby="player-name-hint">
+          <p id="player-name-hint" class="field__hint">Optional. Shown on the leaderboard.</p>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="category-select">Category</label>
+            <select id="category-select" name="category">
+              <option value="0">Any category</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="difficulty-select">Difficulty</label>
+            <select id="difficulty-select" name="difficulty">
+              <option value="easy">Easy</option>
+              <option value="medium" selected>Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
+        <p id="start-error" class="form-error" role="alert" hidden></p>
+        <div class="actions">
+          <button id="start-button" class="btn btn--primary" type="submit">Start quiz</button>
+          <button id="open-leaderboard" class="btn btn--ghost" type="button">Leaderboard</button>
+          <span class="chip">Best score <strong id="best-score-value">0</strong></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="screen" id="screen-loading" data-screen="loading" aria-labelledby="heading-loading" hidden>
+      <div class="loading">
+        <div class="spinner" aria-hidden="true"></div>
+        <h2 id="heading-loading" tabindex="-1">Getting your questions</h2>
+        <p id="loading-message" aria-live="polite">Loading questions</p>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-quiz" data-screen="quiz" data-phase="answering" aria-labelledby="heading-quiz" hidden>
+      <h2 id="heading-quiz" class="sr-only" tabindex="-1">Quiz in progress</h2>
+
+      <div class="quiz-top">
+        <p id="quiz-progress-text" class="quiz-top__progress">Question 1 of 10</p>
+        <p class="quiz-top__score">Score <strong id="quiz-score">0</strong></p>
+        <p id="quiz-streak" class="chip chip--streak" hidden>0 in a row</p>
+      </div>
+      <div id="quiz-progress-bar" class="progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"></div>
+
+      <div class="quiz-meta">
+        <span id="quiz-category" class="chip">Category</span>
+        <span id="quiz-difficulty" class="badge">Medium</span>
+      </div>
+
+      <div class="quiz-stage">
+        <div id="timer" class="timer" role="timer" aria-label="Time left for this question" data-urgent="false">
+          <svg class="timer__ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <circle class="timer__track" cx="50" cy="50" r="42" pathLength="1"></circle>
+            <circle class="timer__progress" cx="50" cy="50" r="42" pathLength="1"></circle>
+          </svg>
+          <span id="timer-text" class="timer__text">15</span>
+        </div>
+        <span id="timer-announcer" class="sr-only" aria-live="polite"></span>
+        <h2 id="question-text" class="quiz-stage__question">Question text appears here</h2>
+        <div class="booster-tray" id="booster-tray" role="region" aria-label="Booster tray"></div>
+        <div id="options-list" class="options" role="group" aria-labelledby="question-text"></div>
+      </div>
+
+      <p id="feedback-banner" class="feedback" aria-live="polite" hidden></p>
+      <div class="actions actions--end">
+        <button id="next-button" class="btn btn--primary" type="button" hidden>Next question</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-result" data-screen="result" aria-labelledby="heading-result" hidden>
+      <h2 id="heading-result" class="sr-only" tabindex="-1">Quiz results</h2>
+
+      <div class="result-hero" id="result-hero">
+        <h2 id="result-headline" class="result-hero__headline">Quiz complete</h2>
+        <p id="result-subline" class="result-hero__sub">Category · Difficulty</p>
+        <p class="score-block">
+          <span class="score-block__label">Your score</span>
+          <span id="result-score" class="score-block__value">0</span>
+        </p>
+        <span id="result-highscore-badge" class="badge badge--best" hidden>New personal best</span>
+      </div>
+
+      <dl class="stats">
+        <div class="stat"><dt>Correct</dt><dd id="result-correct">0 / 10</dd></div>
+        <div class="stat"><dt>Accuracy</dt><dd id="result-accuracy">0%</dd></div>
+        <div class="stat"><dt>Best streak</dt><dd id="result-best-streak">0</dd></div>
+        <div class="stat"><dt>Time</dt><dd id="result-time">0s</dd></div>
+      </dl>
+
+      <p id="result-save-status" class="save-status" aria-live="polite" data-status="saving"></p>
+
+      <div class="actions">
+        <button id="play-again-button" class="btn btn--primary" type="button">Play again</button>
+        <button id="view-leaderboard-button" class="btn btn--ghost" type="button">Leaderboard</button>
+      </div>
+
+      <section id="review-section" class="review" aria-labelledby="review-title">
+        <h3 id="review-title">Questions to revisit</h3>
+        <div id="review-list" class="review__list"></div>
+        <p id="review-empty" class="review__empty" hidden>Perfect score. Nothing to review.</p>
+      </section>
+    </section>
+
+    <section class="screen" id="screen-leaderboard" data-screen="leaderboard" aria-labelledby="heading-leaderboard" hidden>
+      <h2 id="heading-leaderboard" tabindex="-1">Leaderboard</h2>
+
+      <div class="leaderboard-controls">
+        <div class="tabs" role="tablist" aria-label="Leaderboard type">
+          <button id="tab-local" class="tab" type="button" role="tab" aria-selected="true">This device</button>
+          <button id="tab-global" class="tab" type="button" role="tab" aria-selected="false">Global</button>
+        </div>
+        <div class="field field--inline">
+          <label for="leaderboard-difficulty">Difficulty</label>
+          <select id="leaderboard-difficulty">
+            <option value="all">All difficulties</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </div>
+
+      <p id="leaderboard-loading" class="board-note" hidden>Loading scores</p>
+      <p id="leaderboard-error" class="board-note board-note--error" role="alert" hidden></p>
+      <p id="leaderboard-empty" class="board-note" hidden>No scores yet. Finish a quiz to get on the board.</p>
+      <ol id="leaderboard-list" class="leaderboard"></ol>
+
+      <div class="actions">
+        <button id="leaderboard-back" class="btn btn--ghost" type="button">Back</button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

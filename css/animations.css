@@ -1,0 +1,72 @@
+/* Motion: one start-screen entrance, plus responses to player actions. */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes stage-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes option-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-7px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(2px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes question-swap {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Start screen entrance, staggered */
+#screen-start .hero h1 { animation: stage-in var(--dur-slow) var(--ease-out) both; }
+#screen-start .lead { animation: stage-in var(--dur-slow) var(--ease-out) 90ms both; }
+#screen-start .panel { animation: stage-in var(--dur-slow) var(--ease-out) 180ms both; }
+
+/* New question: options settle in one after another */
+.option[data-state='idle'] { animation: option-in var(--dur-med) var(--ease-out) both; }
+.option:nth-child(2) { animation-delay: 40ms; }
+.option:nth-child(3) { animation-delay: 80ms; }
+.option:nth-child(4) { animation-delay: 120ms; }
+
+#screen-quiz[data-phase='answering'] .quiz-stage__question { animation: question-swap var(--dur-med) var(--ease-out); }
+
+/* Reveal */
+.option[data-state='correct'] { animation: pop var(--dur-med) var(--ease-out); }
+.option[data-state='wrong'] { animation: shake 360ms var(--ease-out); }
+.option[data-state='dim'] { animation: none; }
+
+/* Urgent timer pulses gently */
+.timer[data-urgent='true'] { animation: pulse 900ms ease-in-out infinite; }
+
+/* Reduced motion: no movement, colour changes still happen */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .timer[data-urgent='true'] { animation: none; }
+  .toast { transform: none; }
+  .btn:active, .option[data-state='idle']:active { transform: none; margin-bottom: 0; }
+  .btn[data-busy='true']::after, .spinner { animation: none; }
+}

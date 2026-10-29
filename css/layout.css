@@ -1,0 +1,102 @@
+/* Page structure: one centered column, wider stage on desktop. */
+.app-header {
+  display: flex;
+  align-items: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-4) 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-5) var(--space-4) var(--space-8);
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.actions--end { justify-content: flex-end; }
+
+/* Quiz screen: stage card with the timer beside the question when there is room */
+.quiz-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+}
+.quiz-top__progress {
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+}
+.quiz-top__score { color: var(--color-text-muted); }
+.quiz-top__score strong { color: var(--color-text); font-size: var(--step-1); }
+
+.quiz-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+#screen-quiz { gap: var(--space-4); }
+
+.quiz-stage {
+  display: grid;
+  grid-template-areas: 'timer' 'question';
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-l);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-2);
+}
+.quiz-stage .timer { grid-area: timer; }
+.quiz-stage__question {
+  grid-area: question;
+  align-self: center;
+  font-size: var(--step-2);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 560px) {
+  .quiz-stage {
+    grid-template-areas: 'question timer';
+    grid-template-columns: 1fr auto;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-6);
+  }
+  .quiz-stage__question { font-size: var(--step-3); }
+}
+
+.options {
+  display: grid;
+  gap: var(--space-3);
+}
+@media (min-width: 860px) {
+  .app-header, main { max-width: 760px; }
+}

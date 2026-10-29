@@ -1,0 +1,66 @@
+/* Design tokens: the stage-at-night palette, type scale and spacing. */
+:root {
+  --color-bg: #1E1236;
+  --color-bg-elevated: #150C28;
+  --color-surface: #2D1B4E;
+  --color-surface-2: #44296F;
+  --color-border: #5A3D8A;
+  --color-text: #FBF3E4;
+  --color-text-muted: #BDB0D6;
+  --color-accent: #FFC83D;
+  --color-accent-ink: #2A1A00;
+  --color-accent-deep: #B8861A;
+  --color-correct: #32D583;
+  --color-correct-soft: rgba(50, 213, 131, 0.16);
+  --color-wrong: #FF5C7A;
+  --color-wrong-soft: rgba(255, 92, 122, 0.16);
+  --color-wrong-text: #FF8CA1; /* lighter coral so small text stays above 4.5:1 on violet panels */
+  --color-warning: #FFB020;
+
+  /* Booster tokens */
+  --color-booster-accent: #FFC83D;
+  --color-booster-accent-soft: rgba(255, 200, 61, 0.16);
+  --color-booster-ice: #5CD0FF;
+  --color-booster-ice-soft: rgba(92, 208, 255, 0.16);
+  --color-booster-risk: #FF5C7A;
+  --color-booster-risk-soft: rgba(255, 92, 122, 0.16);
+  --color-booster-speed: #FFB020;
+  --color-booster-speed-soft: rgba(255, 176, 32, 0.16);
+  --color-booster-safe: #32D583;
+  --color-booster-safe-soft: rgba(50, 213, 131, 0.16);
+  --color-booster-neutral: #BDB0D6;
+  --color-booster-neutral-soft: rgba(189, 176, 214, 0.16);
+
+  --font-display: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Type scale, ratio 1.25 */
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.563rem;
+  --step-3: 1.953rem;
+  --step-4: clamp(2.2rem, 1.6rem + 3vw, 2.441rem);
+  --step-5: clamp(2.6rem, 1.8rem + 4vw, 3.815rem);
+
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 24px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  --shadow-1: 0 2px 8px rgba(10, 4, 24, 0.35);
+  --shadow-2: 0 18px 40px rgba(10, 4, 24, 0.5);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-med: 240ms;
+  --dur-slow: 480ms;
+}
