@@ -118,3 +118,15 @@ bus.on(EVENTS.QUIZ_FINISHED, async ({ result }) => {
   startView.refreshBestScore();
 });
 
+// View leaderboard from Results or Start screen
+bus.on(EVENTS.UI_VIEW_LEADERBOARD, () => {
+  screenBeforeLeaderboard = getCurrentScreen();
+  showScreen(SCREENS.LEADERBOARD);
+  leaderboardView.open();
+});
+
+// Back from leaderboard
+bus.on(EVENTS.UI_LEADERBOARD_BACK, () => {
+  showScreen(screenBeforeLeaderboard);
+});
+
