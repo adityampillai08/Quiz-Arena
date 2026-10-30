@@ -130,3 +130,18 @@ bus.on(EVENTS.UI_LEADERBOARD_BACK, () => {
   showScreen(screenBeforeLeaderboard);
 });
 
+// Start a new quiz from Results screen
+bus.on(EVENTS.UI_PLAY_AGAIN, () => {
+  // Reset per-game state
+  screenBeforeLeaderboard = SCREENS.START;
+
+  // Reset last played category/difficulty in localStorage
+  localStore.saveSettings({
+    lastCategoryId: 0, // Any Category
+    lastDifficulty: DEFAULT_DIFFICULTY,
+  });
+
+  // Go back to start screen and show it
+  showScreen(SCREENS.START);
+});
+
