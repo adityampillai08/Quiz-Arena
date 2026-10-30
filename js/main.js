@@ -4,7 +4,7 @@
  * It holds no markup and no scoring rules, only the order things happen in.
  * Owned by the coordinator.
  */
-import { EVENTS, SCREENS, QUESTIONS_PER_QUIZ, DEFAULT_PLAYER_NAME } from './constants.js';
+import { EVENTS, SCREENS, QUESTIONS_PER_QUIZ, DEFAULT_PLAYER_NAME, DEFAULT_DIFFICULTY } from './constants.js';
 import { createEventBus } from './eventBus.js';
 import { showScreen, getCurrentScreen, setText } from './dom.js';
 
